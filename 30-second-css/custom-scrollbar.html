@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>scrollbar</title>
+    <style>
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* 定制轨道 */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            background: blue;
+        }
+
+        /* 滑块 */
+        ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: orange;
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .box {
+            height: 500px;
+            overflow: auto;
+        }
+
+        .content {
+            height: 600px;
+            background: red;
+        }
+        /* webkit平台的定制 */
+        /* .box::-webkit-scrollbar {
+            width: 10px;
+            background-color: blue;
+            border-radius: 5px;
+            box-shadow: inset 0 0 6px rgba(0,0,0,.5);
+        } */
+
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="content">this is something intersting!</div>
+    </div>
+</body>
+</html>
