@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+
+        *, *::after, *::before {
+            box-sizing: inherit;
+        }
+
+        .box {
+            height: 400px;
+            width: 400px;
+            background-color: red;
+            display: inline-block;
+        }
+
+         .content-box {
+            background-color: blue;
+            border: 10px solid blue;
+        }
+    </style>
+</head>
+<body>
+    重置所有元素为border-box
+    <div class='box'></div>
+    <div class='box content-box'></div>
+</body>
+</html>
