@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>not-selector</title>
+    <style>
+        ul {
+            display: flex;
+            width: 300px;
+            height: 20px;
+            justify-content: center;
+            align-content: center;
+            text-align: center;
+        }
+        li {
+            flex: 1;
+            list-style-type: none;
+        }
+
+        li:not(:last-child) {
+            border-right: 2px solid red;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+</body>
+</html>

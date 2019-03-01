@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>little-border</title>
+    <style>
+        .border {
+            height: 100px;
+            box-shadow: 0 0 0 1px;
+        }
+        /* 媒体查询书写规则 min-width 从小到大写，max-device从大到小写*/
+        /* dppx: 每像素包含点的数量（dots per pixel） */
+        /* resolution 分辨率，96dpi为1dppx，192dpi为2dppx */
+        @media (min-resolution: 2dppx) {
+            .border {
+                box-shadow: 0 0 0 0.5px;
+            }
+        }
+
+        @media (min-resolution: 3dppx) {
+            .border {
+                box-shadow: 0 0 0 0.3333px;
+            }
+        }
+
+        @media (min-resolution: 4dppx) {
+            .border {
+                box-shadow: 0 0 0 0.25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class='border'>
+        this is have some words!
+    </div>
+</body>
+</html>
