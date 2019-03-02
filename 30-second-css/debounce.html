@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>debounce</title>
+    <style>
+        .long {
+            height: 1000000000000000000px;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class='long'>
+        this is a long long div box.
+    </div>
+    <script>
+        // Throttle 节流: 第一个人说了算
+        // throttle 的主要思想在于：在某段时间内，不管你触发了多少次回调，都只认第一次，并在计时结束时给予响应。
+        
+
+        // debounce 防抖: 不管在一定时间内触发多少次事件， 以最后一次为准
+        // TODO 如何获取fn的参数
+        function debounce (fn,time) {
+            let timer = null;
+            // let ;
+            return function () {
+                if ( timer ) {
+                    clearTimeout(timer);
+                }
+                let args = arguments;
+                let context = this;
+                console.log('args', ...args)
+                console.log('context', context)
+                timer = setTimeout( () => {
+                    // fn();
+                },time)
+            }
+        }
+
+        const arr = [1,2,3,4,5,6,7,8,9];
+        arr.map((el, idx, arr) => console.log(el, idx, arr[idx]))
+        const log = (a) => console.log('log',a)
+        document.addEventListener('scroll',debounce(log(10),3000));
+    </script>
+</body>
+</html>
