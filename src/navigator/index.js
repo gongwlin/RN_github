@@ -1,13 +1,8 @@
-import { createAppContainer, createBottomTabNavigator, createStackNavigator, createSwitchNavigator} from 'react-navigation'
-
-import Favorite from '../pages/Favorite'
-import My from '../pages/My'
-import Trending from '../pages/Trending'
-
+import { createAppContainer, createStackNavigator, createSwitchNavigator} from 'react-navigation'
 import Init from '../pages/Init'
-
+import Search from '../pages/Search'
 import { connect } from 'react-redux'
-import { createReactNavigationReduxMiddleware, reduxifyNavigator} from 'react-navigation-redux-helpers'
+import { createReactNavigationReduxMiddleware, createReduxContainer} from 'react-navigation-redux-helpers'
 
 const WelcomePage = createStackNavigator({
     Init: {
@@ -17,26 +12,15 @@ const WelcomePage = createStackNavigator({
         }
     }
 })
-const BottomTab = createBottomTabNavigator({
-    Favorite: {
-        screen: Favorite,
-        navigatorOptions: {
-            header: null
-        }
-    },
-    My: {
-        screen: My,
-        navigatorOptions: {
-            header: null
-        }
-    },
-    Trending: {
-        screen: Trending,
-        navigatorOptions: {
-            header: null
+
+const MainNavigator = createStackNavigator({
+    Search: {
+        screen: Search,
+        navigationOptions: {
+            header: null,// 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
         }
     }
-},{
+},  {
     defaultNavigationOptions: {
         header: null
     }
@@ -44,20 +28,16 @@ const BottomTab = createBottomTabNavigator({
 
 
 const rootNavigator = createAppContainer(createSwitchNavigator({
-    BottomTab,
-    WelcomePage
+    WelcomePage: WelcomePage,
+    MainNavigator: MainNavigator
 }, {
     navigatorOptions: {
         header: null
     }
 }))
 
-const middleWare = createReactNavigationReduxMiddleware(
-    'root',
-    state => state.navigator
-)
 
-const AppWithNavigationState = reduxifyNavigator(rootNavigator, 'root')
+const AppWithNavigationState = createReduxContainer(rootNavigator)
 
 function mapStateToProps(state) {
     return {state: state.navigator}
@@ -65,5 +45,3 @@ function mapStateToProps(state) {
 
 export const rootPage = 'WelcomePage'
 export default connect(mapStateToProps)(AppWithNavigationState)
-
-

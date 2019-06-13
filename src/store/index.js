@@ -1,11 +1,16 @@
 // import 
 
-import { createStore, combineReducers } from 'redux'
-
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createReactNavigationReduxMiddleware } from 'react-navigation-redux-helpers'
 import navigatorReducer from '../pages/Init/reducer'
-const rootReducer = combineReducers({
-    navigator: navigatorReducer
-})
+// import { middleWare } from '../navigator/index'
+// const rootReducer = combineReducers({
+//     navigator: navigatorReducer
+// })
+const middleWare = createReactNavigationReduxMiddleware(
+    state => state.navigator
+)
 
-export default rootReducer
+const store = createStore(navigatorReducer, applyMiddleware(middleWare))
+export default store
 
