@@ -1,36 +1,38 @@
 import React, { Component } from 'react'
-import { createBottomTabNavigator, createAppContainer } from "react-navigation"
-import { connect } from 'react-redux';
+import { createAppContainer } from "react-navigation"
+import { connect } from 'react-redux'
 
 import Favorite from '../pages/Favorite'
 import My from '../pages/My'
 import Trending from '../pages/Trending'
+import Hot from '../pages/Hot'
 
+// Icon
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Entypo from 'react-native-vector-icons/Entypo'
-// import EventTypes from '../util/EventTypes'
-import { BottomTabBar } from 'react-navigation-tabs'
-import EventBus from 'react-native-event-bus'
 
-type Props = {};
+// import EventTypes from '../util/EventTypes'
+import { BottomTabBar, createBottomTabNavigator } from 'react-navigation-tabs'
+// import EventBus from 'react-native-event-bus'
+
+type Props = {}
 
 const TABS = {//在这里配置页面的路由
-    // PopularPage: {
-    //     screen: PopularPage,
-    //     navigationOptions: {
-    //         tabBarLabel: "最热",
-    //         tabBarIcon: ({ tintColor, focused }) => (
-    //             <MaterialIcons
-    //                 name={'whatshot'}
-    //                 size={26}
-    //                 style={{ color: tintColor }}
-    //             />
-    //         ),
-    //     }
-    // },
-    Trending:
-    {
+    Hot: {
+        screen: Hot,
+        navigationOptions: {
+            tabBarLabel: "最热",
+            tabBarIcon: ({ tintColor, focused }) => (
+                <MaterialIcons
+                    name={'whatshot'}
+                    size={26}
+                    style={{ color: tintColor }}
+                />
+            ),
+        }
+    },
+    Trending: {
         screen: Trending,
         navigationOptions: {
             tabBarLabel: "趋势",
@@ -42,8 +44,7 @@ const TABS = {//在这里配置页面的路由
                 />
             ),
         }
-    }
-    ,
+    },
     Favorite: {
         screen: Favorite,
         navigationOptions: {
@@ -56,8 +57,7 @@ const TABS = {//在这里配置页面的路由
                 />
             ),
         }
-    }
-    ,
+    },
     My: {
         screen: My,
         navigationOptions: {
@@ -68,30 +68,54 @@ const TABS = {//在这里配置页面的路由
                     size={26}
                     style={{ color: tintColor }}
                 />
-            ),
+            )
         }
     }
-};
+}
+// 配置底部导航颜色
+class TabBarComponent extends Component {
+    render() {
+        // const { routes, index} = this.props.navigation.state
+        // console.log('state', this.props.navigation.state)
+        // console.log('this.theme', this.theme)
+        // if(routes[index].params) {
+        //     const { theme } = routes[index].params
+        //     if (theme && theme.updateTime > this.theme.updateTime) {
+        //         this.theme = theme
+        //     }
+        // }
+        console.log('this.props.themeColor', this.props.themeColor)
+        return (
+        <BottomTabBar
+            {...this.props}
+            activeTintColor={this.props.themeColor}
+        />)
+    }
+}
 
-class DynamicTabNavigator extends Component<Props> {
+
+class BottomTabNavigator extends Component<Props> {
     constructor(props) {
         super(props);
-        console.disableYellowBox = true;
+        console.disableYellowBox = true
     }
 
     _tabNavigator() {
         if (this.Tabs) {
-            return this.Tabs;
+            return this.Tabs
         }
-        const { PopularPage, Trending, Favorite, My } = TABS;
-        const tabs = { Trending, Favorite, My };//根据需要定制显示的tab
-        Trending.navigationOptions.tabBarLabel = '最热';//动态配置Tab属性
+        const { Hot, Trending, Favorite, My } = TABS
+        const tabs = { Hot, Trending, Favorite, My }
+        console.log('this.props.theme', this.props.themeColor)
+
+
+        // Trending.navigationOptions.tabBarLabel = '最热';//动态配置Tab属性
         return this.Tabs = createAppContainer(createBottomTabNavigator(tabs, {
             tabBarComponent: props => {
-                return <TabBarComponent theme={this.props.theme} {...props} />
+                return <TabBarComponent {...props} themeColor={this.props.themeColor}/>
+                // return <TabBarComponent {...props} />
             }
-        }
-        ))
+        }))
     }
 
     render() {
@@ -107,25 +131,8 @@ class DynamicTabNavigator extends Component<Props> {
     }
 }
 
-class TabBarComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.theme = {
-            tintColor: props.activeTintColor,
-            updateTime: new Date().getTime(),
-        }
-    }
-
-    render() {
-        return <BottomTabBar
-            {...this.props}
-            activeTintColor={this.props.theme.themeColor}
-        />
-    }
-}
-
 const mapStateToProps = state => ({
-    theme: state.theme.theme,
-});
+    themeColor: state.theme.themeColor,
+})
 
-export default connect(mapStateToProps)(DynamicTabNavigator);
+export default connect(mapStateToProps)(BottomTabNavigator)

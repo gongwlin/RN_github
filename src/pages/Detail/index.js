@@ -4,14 +4,14 @@ import {
     Text,
 } from 'react-native'
 
-class Search extends Component {
+class Detail extends Component {
     render() {
         return (
             <View>
-                
+                <Text>Detail</Text>
             </View>
         )
     }
 }
 
-export default Search
+export default Detail

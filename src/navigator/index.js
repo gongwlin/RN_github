@@ -1,47 +1,57 @@
-import { createAppContainer, createStackNavigator, createSwitchNavigator} from 'react-navigation'
+import { createAppContainer, createStackNavigator, createSwitchNavigator } from 'react-navigation'
 import Init from '../pages/Init'
+import My from '../pages/My'
 import Search from '../pages/Search'
+import Trending from '../pages/Trending'
+import Favorite from '../pages/Favorite'
+import Home from '../pages/Home'
+import Detail from '../pages/Detail'
 import { connect } from 'react-redux'
-import { createReactNavigationReduxMiddleware, createReduxContainer} from 'react-navigation-redux-helpers'
+import { createReduxContainer, createNavigationReducer } from 'react-navigation-redux-helpers'
 
 const WelcomePage = createStackNavigator({
     Init: {
         screen: Init,
-        navigatorOptions: {
-            header: null
-        }
+        navigationOptions: { header: null }
     }
-})
+}, {
+        defaultNavigationOptions: { header: null }
+    }
+)
 
 const MainNavigator = createStackNavigator({
+    Home: {
+        screen: Home,
+        navigationOptions: { header: null }
+    },
     Search: {
         screen: Search,
-        navigationOptions: {
-            header: null,// 可以通过将header设为null 来禁用StackNavigator的Navigation Bar
-        }
+        navigationOptions: { header: null }
+    },
+    Detail: {
+        screen: Detail
     }
+}, {
+        initialRouteName: 'Home'
+ })
+
+const RootNavigator = createSwitchNavigator({
+    WelcomePage,
+    MainNavigator
 },  {
-    defaultNavigationOptions: {
-        header: null
+        initialRouteName: 'MainNavigator',
+        defaultNavigationOptions: { header: null }
     }
+)
+
+export const navigatorReducer = createNavigationReducer(RootNavigator)
+
+const App = createReduxContainer(RootNavigator)
+
+const mapStateToProps = (state) => ({
+    state: state.nav,
 })
 
+const AppWithNavigationState = connect(mapStateToProps)(App)
 
-const rootNavigator = createAppContainer(createSwitchNavigator({
-    WelcomePage: WelcomePage,
-    MainNavigator: MainNavigator
-}, {
-    navigatorOptions: {
-        header: null
-    }
-}))
-
-
-const AppWithNavigationState = createReduxContainer(rootNavigator)
-
-function mapStateToProps(state) {
-    return {state: state.navigator}
-}
-
-export const rootPage = 'WelcomePage'
-export default connect(mapStateToProps)(AppWithNavigationState)
+export default AppWithNavigationState
